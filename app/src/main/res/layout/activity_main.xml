@@ -39,6 +39,7 @@
             style="@style/Widget.AppCompat.Button"
             android:src="@drawable/pallet_normal"
             android:tag="@color/skin"
+            android:onClick="paintCliked"
             />
          <!-- balck -->
         <Button
@@ -50,6 +51,8 @@
             style="@style/Widget.AppCompat.Button"
             android:src="@drawable/pallet_normal"
             android:tag="@color/black"
+            android:onClick="paintCliked"
+
             />
 
         <Button
@@ -61,6 +64,7 @@
             style="@style/Widget.AppCompat.Button"
             android:src="@drawable/pallet_normal"
             android:tag="@color/red"
+            android:onClick="paintCliked"
             />
         <Button
         android:layout_width="25dp"
@@ -71,6 +75,7 @@
         android:src="@drawable/pallet_normal"
             style="@style/Widget.AppCompat.Button"
         android:tag="@color/green"
+            android:onClick="paintCliked"
         />
         <Button
         android:layout_width="25dp"
@@ -81,6 +86,7 @@
             style="@style/Widget.AppCompat.Button"
         android:src="@drawable/pallet_normal"
         android:tag="@color/blue"
+            android:onClick="paintCliked"
         />
         <Button
             android:layout_width="25dp"
@@ -91,6 +97,7 @@
             style="@style/Widget.AppCompat.Button"
             android:src="@drawable/pallet_normal"
             android:tag="@color/yellow"
+            android:onClick="paintCliked"
             />
         <Button
             android:layout_width="25dp"
@@ -101,6 +108,7 @@
             style="@style/Widget.AppCompat.Button"
             android:src="@drawable/pallet_normal"
             android:tag="@color/lollipop"
+            android:onClick="paintCliked"
             />
 
 

@@ -3,6 +3,7 @@ package com.ak.drawingapp
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
@@ -38,6 +39,21 @@ class MainActivity : AppCompatActivity() {
             brushDilog.dismiss()
         }
         brushDilog.show()
+
+    }
+
+    fun paintCliked(view: View){
+        if(view != mImageButtonCurrentPoint){
+            val button = view as Button
+            val colorTag = button.tag.toString()
+            DrowingView.setColor(colorTag)
+            val drawble = ContextCompat.getDrawable(this,R.drawable.selected)
+            button!!.setCompoundDrawablesWithIntrinsicBounds(drawble,null,null,null)
+
+            val drawbl2e = ContextCompat.getDrawable(this,R.drawable.selected)
+            mImageButtonCurrentPoint!!.setCompoundDrawablesWithIntrinsicBounds(drawble,null,null,null)
+            mImageButtonCurrentPoint =view
+        }
 
     }
 }
