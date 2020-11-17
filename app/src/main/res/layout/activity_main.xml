@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <com.ak.drawingapp.DrawingView
+        android:id="@+id/DrowingView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="30dp"
+        android:layout_weight="1"
+        android:background="@drawable/drowing_layout"
+         />
+
+    <LinearLayout
+        android:id="@+id/ll_point_colors"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+
+
+        >
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="3dp"
+            android:background="@color/skin"
+            android:contentDescription="color pallate"
+            style="@style/Widget.AppCompat.Button"
+            android:src="@drawable/pallet_normal"
+            android:tag="@color/skin"
+            />
+         <!-- balck -->
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="3dp"
+            android:background="@color/black"
+            android:contentDescription="color pallate"
+            style="@style/Widget.AppCompat.Button"
+            android:src="@drawable/pallet_normal"
+            android:tag="@color/black"
+            />
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="3dp"
+            android:background="@color/red"
+            android:contentDescription="color pallate"
+            style="@style/Widget.AppCompat.Button"
+            android:src="@drawable/pallet_normal"
+            android:tag="@color/red"
+            />
+        <Button
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_margin="3dp"
+        android:background="@color/green"
+        android:contentDescription="color pallate"
+        android:src="@drawable/pallet_normal"
+            style="@style/Widget.AppCompat.Button"
+        android:tag="@color/green"
+        />
+        <Button
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_margin="3dp"
+        android:background="@color/blue"
+        android:contentDescription="color pallate"
+            style="@style/Widget.AppCompat.Button"
+        android:src="@drawable/pallet_normal"
+        android:tag="@color/blue"
+        />
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="3dp"
+            android:background="@color/yellow"
+            android:contentDescription="color pallate"
+            style="@style/Widget.AppCompat.Button"
+            android:src="@drawable/pallet_normal"
+            android:tag="@color/yellow"
+            />
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="3dp"
+            android:background="@color/lollipop"
+            android:contentDescription="color pallate"
+            style="@style/Widget.AppCompat.Button"
+            android:src="@drawable/pallet_normal"
+            android:tag="@color/lollipop"
+            />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/id_brush"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text=" B size"
+        android:contentDescription="Brush Size"
+        />
+
+
+
+</LinearLayout>
