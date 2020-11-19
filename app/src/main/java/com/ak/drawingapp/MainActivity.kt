@@ -1,14 +1,26 @@
 package com.ak.drawingapp
 
+import android.Manifest
+import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.brush_size.*
+import java.lang.Exception
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +38,38 @@ class MainActivity : AppCompatActivity() {
             showBrushSize()
         }
 
+        //=================pick gallery
+        id_gallery.setOnClickListener {
+            if(isReadStorageAlloed()){
+                val pickPhotoIntent = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(pickPhotoIntent, Gallery)
+
+            }else{
+                requestStoragePersmission()
+            }
+        }
+
+
+        id_Undo.setOnClickListener {
+            DrowingView.onClickUndo()
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK){
+            if(requestCode == Gallery){
+                try {
+                    if(data!!.data !=null){
+                        iv_backgroud.visibility = View.VISIBLE
+                        iv_backgroud.setImageURI(data.data)
+                    }else{
+                        Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show()
+                    }
+                }catch (e:Exception){e.printStackTrace()}
+            }
+        }
     }
 
     private fun showBrushSize(){
@@ -56,4 +100,52 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun requestStoragePersmission(){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this,
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE).toString())){
+            Toast.makeText(this,"need permission to add",Toast.LENGTH_SHORT).show()
+
+        }
+        ActivityCompat.requestPermissions(this,
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            Storage_Premission_Code)
+    }
+
+    private fun isReadStorageAlloed():Boolean{
+        val result = ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)
+        return result == PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == Storage_Premission_Code){
+            if(grantResults.isNotEmpty()&&grantResults[0]== PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this,"permission granted",Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(this,"no permission",Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun getBitmapFromView(view: View):Bitmap{
+        val retunBitmap = Bitmap.createBitmap(view.width,view.height,Bitmap.Config.ARGB_8888)
+
+        val cancvas = Canvas(retunBitmap)
+        val bgDrawble =view.background
+        if(bgDrawble !=null){
+            bgDrawble.draw(cancvas)
+        }else{
+            cancvas.drawColor(Color.WHITE)
+        }
+        view.draw(cancvas)
+        return  retunBitmap
+    }
+
+    companion object {
+        private  const val Storage_Premission_Code =1
+        private  const val Gallery =2
+
+    }
+
 }
