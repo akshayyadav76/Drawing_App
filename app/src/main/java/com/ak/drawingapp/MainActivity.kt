@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -19,6 +20,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.brush_size.*
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.lang.Exception
 
 
@@ -52,6 +56,14 @@ class MainActivity : AppCompatActivity() {
 
         id_Undo.setOnClickListener {
             DrowingView.onClickUndo()
+        }
+
+        id_Save.setOnClickListener {
+            if(isReadStorageAlloed()){
+                BitmapAsyncTask(getBitmapFromView(frame)).execute()
+            }else{
+                requestStoragePersmission()
+            }
         }
 
     }
@@ -141,6 +153,43 @@ class MainActivity : AppCompatActivity() {
         view.draw(cancvas)
         return  retunBitmap
     }
+
+    private inner class BitmapAsyncTask(val mBitmap:Bitmap):AsyncTask<Any,Void,String>(){
+
+
+
+        override fun doInBackground(vararg p0: Any?): String {
+            var reuslt = ""
+            if(mBitmap !=null){
+                try {
+                    val bytes = ByteArrayOutputStream()
+                    mBitmap.compress(Bitmap.CompressFormat.PNG,90,bytes)
+                    val file = File(externalCacheDir!!.absoluteFile.toString()+
+                            File.separator + "KidesDrowing" + System.currentTimeMillis()/1000 +".png")
+
+                    val fos = FileOutputStream(file)
+                    fos.write(bytes.toByteArray())
+                    fos.close()
+                    reuslt = file.absolutePath
+                }catch (e:Exception){
+                    reuslt =""
+                    e.printStackTrace()
+                }
+            }
+            return  reuslt
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            if(!result!!.isEmpty()){
+                Toast.makeText(this@MainActivity,"saved $result",Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(this@MainActivity,"error not saved $result",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+
 
     companion object {
         private  const val Storage_Premission_Code =1
